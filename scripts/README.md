@@ -5,9 +5,10 @@
 Ejecuta un nodo IPFS y sus funcionalidades. Despliega la API Rest y gestiona
 las peticiones a la misma.
 
-_Ejecución_
+
 ```
-#
+# Ejecución de la API
+node app.mjs
 ```
 
 ### script.sh
