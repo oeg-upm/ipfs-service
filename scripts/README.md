@@ -5,6 +5,11 @@
 Ejecuta un nodo IPFS y sus funcionalidades. Despliega la API Rest y gestiona
 las peticiones a la misma.
 
+_Ejecución_
+```
+#
+```
+
 ### script.sh
 
 Lee el fichero pasado como primer parámetro y realiza el volcado de los datos
