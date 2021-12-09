@@ -6,6 +6,9 @@ import methodOverride from 'method-override'
 import { exec }  from "child_process"
 import CID from 'cids'
 import { stdout } from 'process';
+import events from 'events';
+
+events.EventEmitter.defaultMaxListeners = 0;
 
 /*
     Añadimos un fichero con el contenido pasado como parámetro
