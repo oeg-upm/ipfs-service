@@ -7,7 +7,11 @@ import { exec }  from "child_process"
 import CID from 'cids'
 import { stdout } from 'process';
 import events from 'events';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 events.EventEmitter.defaultMaxListeners = 0;
 
 /*
@@ -160,7 +164,18 @@ let respuesta = {
  *  http://localhost:4040/
  */
 app.get('/', function(req, res) {
-    res.send("Bienvenidos a mi api Rest para IPFS");
+    //res.send("API Rest corriendo en la máquina 1.");
+    //res.sendFile('inicio.html');
+    var options = {
+        root: path.join(__dirname)
+    };
+    var fileName = 'inicio.html';
+    res.sendFile(fileName, options, function (err) {
+        if (err) {
+            console.info(err);
+        }
+    });
+
 });
 
 /*
