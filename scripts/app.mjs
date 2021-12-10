@@ -9,6 +9,7 @@ import { stdout } from 'process';
 import events from 'events';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import * as ipns from 'ipns';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -458,10 +459,12 @@ app.post('/file/ipns', async (req,res) => {
             }
                 console.log(`stdout: ${stdout}`)
                 salida = stdout
+                var key = salida.substring(13,13+62)
                 respuesta = {
                     error: false,
                     code: 201,
-                    mensaje: salida
+                    message: salida,
+                    key: key
                 }
                 res.send(respuesta)
         });
@@ -469,6 +472,7 @@ app.post('/file/ipns', async (req,res) => {
         console.info(error)
     }
 });
+
 /*
  *  Método POST para conectarnos a un nuevo peer.
  *      http://localhost:4040/peer 
