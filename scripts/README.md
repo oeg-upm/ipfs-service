@@ -15,8 +15,8 @@ node app.mjs
 
 Lee el fichero pasado como primer parámetro y realiza el volcado de los datos
 en un intervalo de líneas igual al segundo parámetro, o en su defecto, en
-intervalos de 1000 líneas
+intervalos de 100000 líneas
 
 ```
-./script.sh sensor1.csv 5000
+./script.sh sensor1.csv 500000
 ```
