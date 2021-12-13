@@ -3,7 +3,17 @@
 ### app.mjs
 
 Ejecuta un nodo IPFS y sus funcionalidades. Despliega la API Rest y gestiona
-las peticiones a la misma.
+las peticiones que le llegan al nodo.
+
+### write.mjs
+
+Script que se ejecuta en el nodo que escribe los datos de los sensores. 
+Automatiza la subida y publicación de los datos.
+
+### read.mjs
+
+Script que se ejecuta en el nodo que lee los datos.
+Automatiza la lectura de los datos subidos a IPFS y los imprime por pantalla.
 
 ### script.sh
 
