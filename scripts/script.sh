@@ -1,9 +1,11 @@
 #!/bin/bash
+
+start=$SECONDS
 echo 'Script para automatizar la lectura de los ficheros de datos de sensores'
 
 if [ $# -eq 1 ];
 then
-    LINEAS=1000
+    LINEAS=100000
 elif [ $# -eq 2 ];
 then
     LINEAS=$2
@@ -13,6 +15,7 @@ else
     echo 'Introduzca el nombre del fichero y el intervalo de líneas' 1>&2
     exit 1
 fi
+
 #Comprobamos que el fichero pasado como parámetro existe
 test -f $1
 if [ $? -ne 0 ];
@@ -21,7 +24,7 @@ then
     exit 2
 fi
 
-cat $1 > aux
+cp $1 aux
 
 test -f fich
 if [ $? -eq 0 ]
@@ -37,14 +40,20 @@ do
     if [ $CONT -eq $LINEAS ];
     then
         CONT=0
-        read -n 1 -s -r -p "Pulsar tecla"
-        #sleep 1
+        #read -n 1 -s -r -p "Pulsar tecla"
+        sleep 5
+        echo "Esperamos 5 segundos"
     fi
     CONT=$((CONT + 1))
     FIN=$((FIN + 1))
     echo $line >> fich
 done 10< aux
 rm aux
+
+duration=$(( SECONDS - start ))
+
+echo "Duration: " $duration
+export bucle=1
 
 #read -n 1 -s -r -p "Pulsar tecla"
 #echo
