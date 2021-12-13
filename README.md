@@ -30,7 +30,7 @@ npm init
 _Instalación de las dependencias usadas en el proyecto_
 
 ```
-npm install ipfs-core express body-parser cids method-override url path
+npm install ipfs-core express body-parser cids method-override url path getenv setenv
 ```
 
 #### Instalación de IPFS
