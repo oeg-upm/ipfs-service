@@ -26,12 +26,12 @@ fi
 
 cp $1 aux
 
-test -f fich
+test -f fich.csv
 if [ $? -eq 0 ]
 then
-    rm fich
+    rm fich.csv
 fi
-touch fich
+touch fich.csv
 
 CONT=0
 FIN=0
@@ -46,7 +46,7 @@ do
     fi
     CONT=$((CONT + 1))
     FIN=$((FIN + 1))
-    echo $line >> fich
+    echo $line >> fich.csv
 done 10< aux
 rm aux
 
