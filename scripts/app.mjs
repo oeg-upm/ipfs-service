@@ -6,6 +6,14 @@ import methodOverride from 'method-override'
 import { exec }  from "child_process"
 import CID from 'cids'
 import { stdout } from 'process';
+import events from 'events';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import * as ipns from 'ipns';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+events.EventEmitter.defaultMaxListeners = 0;
 
 /*
     Añadimos un fichero con el contenido pasado como parámetro
@@ -157,7 +165,18 @@ let respuesta = {
  *  http://localhost:4040/
  */
 app.get('/', function(req, res) {
-    res.send("Bienvenidos a mi api Rest para IPFS");
+    //res.send("API Rest corriendo en la máquina 1.");
+    //res.sendFile('inicio.html');
+    var options = {
+        root: path.join(__dirname)
+    };
+    var fileName = 'inicio.html';
+    res.sendFile(fileName, options, function (err) {
+        if (err) {
+            console.info(err);
+        }
+    });
+
 });
 
 /*
@@ -440,10 +459,12 @@ app.post('/file/ipns', async (req,res) => {
             }
                 console.log(`stdout: ${stdout}`)
                 salida = stdout
+                var key = salida.substring(13,13+62)
                 respuesta = {
                     error: false,
                     code: 201,
-                    mensaje: salida
+                    message: salida,
+                    key: key
                 }
                 res.send(respuesta)
         });
@@ -451,6 +472,7 @@ app.post('/file/ipns', async (req,res) => {
         console.info(error)
     }
 });
+
 /*
  *  Método POST para conectarnos a un nuevo peer.
  *      http://localhost:4040/peer 
