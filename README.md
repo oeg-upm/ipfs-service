@@ -42,7 +42,7 @@ npm install ipfs-core express body-parser cids method-override url path getenv s
 wget https://dist.ipfs.io/go-ipfs/v0.11.0/go-ipfs_v0.11.0_linux-amd64.tar.gz
 
 #Descomprimimos el fichero
-tar -xvzf go-ipfs_v0.10.0_linux-amd64.tar.gz
+tar -xvzf go-ipfs_v0.11.0_linux-amd64.tar.gz
 
 #Ejecutamos el fichero de instalación
 cd go-ipfs
@@ -50,7 +50,7 @@ sudo bash install.sh
 
 #Comprobamos que ha sido instalado correctamente_
 ipfs --version
-> ipfs version 0.10.0
+> ipfs version 0.11.0
 ```
 
 
