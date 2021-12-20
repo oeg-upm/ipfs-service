@@ -39,7 +39,7 @@ npm install ipfs-core express body-parser cids method-override url path getenv s
 
 ```
 #Descargamos el fichero binario
-wget https://dist.ipfs.io/go-ipfs/v0.10.0/go-ipfs_v0.10.0_linux-amd64.tar.gz
+wget https://dist.ipfs.io/go-ipfs/v0.11.0/go-ipfs_v0.11.0_linux-amd64.tar.gz
 
 #Descomprimimos el fichero
 tar -xvzf go-ipfs_v0.10.0_linux-amd64.tar.gz
