@@ -19,7 +19,6 @@ var lineas = 0;
 rl.on('line', (line) => {
     //console.log(line)
     lineas += 1;
-    
     var content = line + '\n'
     fs.writeFileSync('final' + num + '.csv', content, {
         encoding: "utf8",
