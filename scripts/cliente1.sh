@@ -2,12 +2,8 @@
 #Script que ejecuta la lectura del nodo1.
 
 
-./leerLineas.sh scripts/int_analog01.csv &
-
-while [ $bucle -eq 0 ]
-do
-	node write.mjs
-	sleep 10
-done
-	
-echo "Terminada la ejecución"
+start=$SECONDS
+node lecturaLineas.mjs scripts/int_analog01.csv &
+node lecturaLineas.mjs scripts/int_analog02.csv 
+duration=$(( SECONDS - start ))
+echo "duracion: " $duration
