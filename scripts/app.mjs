@@ -9,7 +9,7 @@ import { stdout } from 'process';
 import events from 'events';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import * as ipns from 'ipns';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -138,9 +138,16 @@ const nodeInfo = await node.id()
 
 //Ponemos a funcionar el server
 const app = express()
+var jsonParser = bodyParser.json();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
+app.use(bodyParser.json({limit: '200mb', extended: true}));
+app.use(bodyParser.urlencoded({
+    limit: '200mb',
+    parameterLimit: 100000,
+    extended: true 
+}));
 app.use( (request, response, next) => {
     /*response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -218,16 +225,14 @@ app.get('/file/ipns/:cid', async (req, res) => {
             console.log(`stderr: ${stderr}`);
             return;
         }
-            console.log(`stdout: ${stdout}`)
+            //console.log(`stdout: ${stdout}`)
             salida = stdout
-    });
-    setTimeout(function(){
-        respuesta = {
-            error: false, code: 200, message: 'OK', content: salida
-        }
-        res.send(respuesta)
-        console.log(respuesta)
-    },4000);       
+            respuesta = {
+                error: false, code: 200, message: 'OK', content: salida
+            }
+            res.send(respuesta)
+            console.log("OK. 200")
+    });    
 });
 /*
  *  Método GET que devuelve los peer a los que estamos conectados
@@ -371,7 +376,7 @@ app.get('/key', async (req, res) => {
  *      http://localhost:4040/file
  *          postFile()
  */
-app.post('/file', async (req,res) => {
+app.post('/file', jsonParser,async (req,res) => {
     console.log("Creamos fichero. POST")
     const content = req.body.content
     try {
@@ -457,7 +462,7 @@ app.post('/file/ipns', async (req,res) => {
                 console.log(`stderr: ${stderr}`);
                 return;
             }
-                console.log(`stdout: ${stdout}`)
+                //console.log(`stdout: ${stdout}`)
                 salida = stdout
                 var key = salida.substring(13,13+62)
                 respuesta = {
@@ -467,6 +472,7 @@ app.post('/file/ipns', async (req,res) => {
                     key: key
                 }
                 res.send(respuesta)
+                console.log("OK. 201")
         });
     } catch (error) {
         console.info(error)
@@ -506,7 +512,51 @@ app.post('/peer', async (req,res) => {
 app.post('/pubsub', async (req, res) => {
     console.info('Nos suscribimos a un topic. POST')
     const topic = req.body.topic
-    const receiveMsg = (msg) => console.log(new TextDecoder().decode(msg.data))
+    //Tratamiento cuando se recibe un mensaje a través del topic
+    const receiveMsg = (msg) => {
+        //console.log("Mensaje recibido:")
+        //console.log(new TextDecoder().decode(msg.data))
+        if (topic == "ipns01") {
+            const key = new TextDecoder().decode(msg.data)
+            const file = "int_analog01.csv"
+            //console.log("Mensaje recibido:")
+            console.log("Copiamos el fichero: /ipns/" + key)
+            //const comando = "ipfs get " key
+            const comando = "ipfs get --output=" + file + " " + key
+            console.log(comando)
+            exec(comando, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            });
+        } else if (topic == "ipns02") {
+            const key = new TextDecoder().decode(msg.data)
+            const file = "int_analog02.csv"
+            //console.log("Mensaje recibido:")
+            console.log("Copiamos el fichero: /ipns/" + key)
+            //const comando = "ipfs get " key
+            const comando = "ipfs get --output=" + file + " " + key
+            console.log(comando)
+            exec(comando, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            });
+        }
+    }
+    //Respuesta que se le da al cliente
     try {
         await node.pubsub.subscribe(topic, receiveMsg)
         respuesta = {
@@ -620,7 +670,7 @@ app.delete('/peer/:addr', async (req, res) => {
     }
 });
 
-app.use(router);
+//app.use(router);
 
 app.listen(4040, function () {
   console.log("Node server running on http://localhost:4040");
