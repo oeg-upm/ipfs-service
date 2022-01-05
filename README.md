@@ -27,11 +27,21 @@ _Inicialización del proyecto_
 ```
 npm init
 ```
-_Instalación de las dependencias usadas en el proyecto_
 
+_Instalación de las dependencias usadas en el proyecto_
 ```
 npm install ipfs-core express body-parser cids method-override url path getenv setenv
 ```
+
+_Modificación del límite de bytes parseables: 200mb en vez de 50kb_
+```
+File: node_modules/body-parser/lib/types/json.js
+
+  var limit = typeof opts.limit !== 'number'
+    ? bytes.parse(opts.limit || '200mb')
+    : opts.limit
+```
+
 
 #### Instalación de IPFS
 
