@@ -19,10 +19,6 @@ Realiza la lectura de los ficheros que contienen los datos de sensores
 ejecutando el script lecturaLineas.mjs, que a su vez ejecuta el script
 write.mjs.
 
-```
-# Ejecución del cliente
-./cliente1.sh
-```
 
 ### lecturaLineas.mjs (maq 1)
 
@@ -40,3 +36,29 @@ maq 2 de que los ficheros han sido actualizados mediante pubsub.
 
 Script ejecutado por la máquina para suscribirse a los canales por los que la
 máquina 1 notificará las actualizaciones.
+
+### Ejecución máquina 1:
+
+```
+# Despliegue del nodo IPFS y API Rest
+ipfs daemon &
+node app.mjs
+```
+
+```
+# Ejecución del cliente (creamos otro terminal)
+./cliente1.sh
+```
+
+### Ejecución máquina 2:
+
+```
+# Despliegue del nodo IPFS y API Rest
+ipfs daemon &
+node app.mjs
+```
+
+```
+# Suscripción a los topics
+node sub.mjs
+```
