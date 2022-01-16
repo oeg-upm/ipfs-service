@@ -43,7 +43,7 @@
           "application/json"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "schema": {
               "type": "object",
@@ -64,7 +64,7 @@
             }
           },
           "500": {
-            "description": "Invalid cid"
+            "description": "Internal error"
           }
         }
       }
@@ -115,10 +115,19 @@
               "type": "object",
               "properties": {
                 "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
                   "type": "string"
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -163,16 +172,25 @@
               }
             }
           },
-          "500": {
+          "400": {
             "description": "Invalid cid",
             "schema": {
               "type": "object",
               "properties": {
                 "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
                   "type": "string"
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -213,7 +231,7 @@
           "application/json"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "schema": {
               "type": "object",
@@ -234,7 +252,7 @@
             }
           },
           "500": {
-            "description": "Invalid cid"
+            "description": "Internal error"
           }
         }
       }
@@ -280,21 +298,7 @@
             }
           },
           "500": {
-            "description": "Server error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       },
@@ -371,21 +375,7 @@
             }
           },
           "500": {
-            "description": "Server error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       }
@@ -454,7 +444,7 @@
             }
           },
           "400": {
-            "description": "Invalid cid",
+            "description": "Invalid id",
             "schema": {
               "type": "object",
               "properties": {
@@ -469,6 +459,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       },
@@ -509,7 +502,7 @@
             }
           },
           "400": {
-            "description": "Invalid cid",
+            "description": "Invalid id",
             "schema": {
               "type": "object",
               "properties": {
@@ -524,6 +517,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -561,7 +557,7 @@
           "application/json"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "schema": {
               "type": "object",
@@ -594,6 +590,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -679,21 +678,7 @@
             }
           },
           "500": {
-            "description": "Server error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       },
@@ -767,6 +752,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "The operation could not be completed."
           }
         }
       }
@@ -804,7 +792,7 @@
           "application/json"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "schema": {
               "type": "object",
@@ -822,21 +810,7 @@
             }
           },
           "500": {
-            "description": "the operation could not be completed",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "the operation could not be completed"
           }
         }
       }
@@ -878,7 +852,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "schema": {
               "type": "object",
@@ -896,21 +870,7 @@
             }
           },
           "500": {
-            "description": "The operation could not be completed",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "The operation could not be completed"
           }
         }
       }
@@ -989,21 +949,7 @@
             }
           },
           "500": {
-            "description": "The operation could not be completed.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "The operation could not be completed."
           }
         }
       },
@@ -1047,21 +993,7 @@
             }
           },
           "500": {
-            "description": "The operation could not be completed.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "The operation could not be completed."
           }
         }
       }
@@ -1133,21 +1065,7 @@
             }
           },
           "500": {
-            "description": "Server error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       }
@@ -1219,15 +1137,7 @@
             }
           },
           "500": {
-            "description": "Invalid cid",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       }
@@ -1274,21 +1184,7 @@
             }
           },
           "500": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       }
@@ -1349,21 +1245,7 @@
             }
           },
           "500": {
-            "description": "Server error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "boolean"
-                },
-                "code": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Internal error"
           }
         }
       }
