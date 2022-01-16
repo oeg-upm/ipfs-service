@@ -1,11 +1,11 @@
-## Scripts 📄
+## Scripts caso 1 📄
 
 En esta carpeta diferenciaremos los scripts que usarán las 2 máquinas.
 
 ### app.mjs
 
-Ejecuta un nodo IPFS y sus funcionalidades. Despliega la API Rest y gestiona
-las peticiones que le llegan al nodo.
+Utilizado por ambas máquinas. Despliega un nodo IPFS y sus funcionalidades.
+Ejecuta la API Rest y gestiona las peticiones que le llegan.
 
 ```
 # Ejecución de la API
@@ -26,12 +26,12 @@ write.mjs.
 
 ### lecturaLineas.mjs
 
-Script que se encarga de leer los ficheros de sensores línea a línea, y,
-cada 400000 líneas ejecuta el script write.mjs para que se suba el fichero
-a ipfs.
-
+Script que recibe como primer parámetro el fichero de datos de sensores
+que tiene que tratar. Lee trozos de 400000 lineas y acto seguido llama
+al script write.mjs para subirlas a IPFS.
 
 ### write.mjs
 
-Script que se encarga de llamar a los métodos de la API para subir el archivo
-y publicar los cambios en el canal pubsub al que la máquina 2 se suscribe.
+Script ejecutado desde lecturaLineas, realiza las solicitudes de POST a la
+API para subir los datos de los sensores y acto seguido notificar a la 
+maq 2 de que los ficheros han sido actualizados mediante pubsub.
