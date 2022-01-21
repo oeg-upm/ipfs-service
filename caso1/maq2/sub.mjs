@@ -40,3 +40,17 @@ method: "POST",
     //Procesar los datos
     console.log("Nos suscribimos al topic: ipns02")
 });
+fetch("http://localhost:4040/pubsub", optionsPost ={
+method: "POST",
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+    	topic: "ipns03"
+    })
+})
+    .then(response => response.text())
+    .then(data => {
+    //Procesar los datos
+    console.log("Nos suscribimos al topic: ipns03")
+});

@@ -386,7 +386,8 @@ app.post('/file', jsonParser,async (req,res) => {
         }
         res.send(respuesta)    
     } catch (error) {
-        console.info(error)
+        console.log(error)
+        res.status(500)
     }
     
 });
@@ -510,37 +511,28 @@ app.post('/peer', async (req,res) => {
  *          sub()
 */
 app.post('/pubsub', async (req, res) => {
-    console.info('Nos suscribimos a un topic. POST')
     const topic = req.body.topic
+    console.info('POST. Nos suscribimos al topic: ' + topic )
     //Tratamiento cuando se recibe un mensaje a través del topic
     const receiveMsg = (msg) => {
         //console.log("Mensaje recibido:")
         //console.log(new TextDecoder().decode(msg.data))
+        var file ="";
+        var get = false;
         if (topic == "ipns01") {
-            const key = new TextDecoder().decode(msg.data)
-            const file = "int_analog01.csv"
-            //console.log("Mensaje recibido:")
-            console.log("Copiamos el fichero: /ipns/" + key)
-            //const comando = "ipfs get " key
-            const comando = "ipfs get --output=" + file + " " + key
-            console.log(comando)
-            exec(comando, (error, stdout, stderr) => {
-                if (error) {
-                    console.log(`error: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    console.log(`stderr: ${stderr}`);
-                    return;
-                }
-                console.log(`stdout: ${stdout}`);
-            });
+            file = "int_analog01.csv";
+            get = true;
         } else if (topic == "ipns02") {
+            file = "int_analog02.csv";
+            get = true;
+        } else if(topic == "ipns03") {
+            file = "pro_power.csv";
+            get = true;
+            console.log(file)
+        }
+        if(get) {
             const key = new TextDecoder().decode(msg.data)
-            const file = "int_analog02.csv"
-            //console.log("Mensaje recibido:")
-            console.log("Copiamos el fichero: /ipns/" + key)
-            //const comando = "ipfs get " key
+            //console.log(key)
             const comando = "ipfs get --output=" + file + " " + key
             console.log(comando)
             exec(comando, (error, stdout, stderr) => {
@@ -575,6 +567,7 @@ app.post('/pubsub', async (req, res) => {
         res.status(500).send(respuesta)
     }
 });
+
 /*
  *  Método para publicar en un topic.
  *      http://localhost:4040/pubsub/topic

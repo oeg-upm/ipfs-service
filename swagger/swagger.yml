@@ -30,7 +30,7 @@ paths:
       produces:
       - "application/json"
       responses:
-        200:
+        201:
           description: "Successful operation"
           schema:
             type: object
@@ -44,7 +44,7 @@ paths:
               message:
                 type: string
         '500':
-          description: "Invalid cid"
+          description: "Internal error"
   /file/{cid}:
     get:
       tags:
@@ -79,7 +79,13 @@ paths:
             type: object
             properties:
               error: 
+               type: boolean
+              code:
+               type: integer
+              message:
                type: string
+        '500':
+          description: "Internal error"
   /file/ipns/{cid}:
     get:
       tags:
@@ -108,13 +114,19 @@ paths:
                 type: string
               content:
                 type: string
-        '500':
+        '400':
           description: "Invalid cid"
           schema:
             type: object
             properties:
               error: 
+               type: boolean
+              code:
+               type: integer
+              message:
                type: string
+        '500':
+          description: "Internal error"
   /file/ipns:
     post:
       tags:
@@ -140,7 +152,7 @@ paths:
       produces:
       - "application/json"
       responses:
-        200:
+        201:
           description: "Successful operation"
           schema:
             type: object
@@ -154,7 +166,7 @@ paths:
               message:
                 type: string
         '500':
-          description: "Invalid cid"
+          description: "Internal error"
   /peer:
     get:
       tags:
@@ -184,16 +196,7 @@ paths:
                     peer:
                       type: string
         '500':
-          description: "Server error"
-          schema:
-            type: "object"
-            properties:
-              error:
-                type: boolean
-              code:
-                type: integer
-              message:
-                type: string
+          description: "Internal error"
     post:
       tags:
       - "peer"
@@ -244,16 +247,7 @@ paths:
               message:
                 type: string
         '500':
-          description: "Server error"
-          schema:
-            type: object
-            properties:
-              error:
-                type: boolean
-              code:
-                type: integer
-              message:
-                type: string
+          description: "Internal error"
   /peer/{id}:
     get:
       tags:
@@ -298,7 +292,7 @@ paths:
                     items:
                       type: string
         '400':
-          description: "Invalid cid"
+          description: "Invalid id"
           schema:
             type: object
             properties:
@@ -308,6 +302,8 @@ paths:
                 type: integer
               message:
                 type: string
+        '500':
+          description: "Internal error"
     delete:
       tags:
       - "peer"
@@ -334,7 +330,7 @@ paths:
               message:
                 type: string
         '400':
-          description: "Invalid cid"
+          description: "Invalid id"
           schema:
             type: object
             properties:
@@ -344,6 +340,8 @@ paths:
                 type: integer
               message:
                 type: string
+        '500':
+          description: "Internal error"
   /pin:
     post:
       tags:
@@ -367,7 +365,7 @@ paths:
       produces:
       - "application/json"
       responses:
-        '200':
+        '201':
           description: "Successful operation"
           schema:
             type: object
@@ -389,6 +387,8 @@ paths:
                 type: integer
               message:
                 type: string
+        '500':
+          description: "Internal error"
   /pin/{cid}:
     get:
       tags:
@@ -444,16 +444,7 @@ paths:
               message:
                 type: string
         '500':
-          description: "Server error"
-          schema:
-            type: object
-            properties:
-              error: 
-               type: boolean
-              code:
-                type: integer
-              message:
-                type: string
+          description: "Internal error"
     delete:
       tags:
       - "pin"
@@ -502,6 +493,8 @@ paths:
                 type: integer
               message: 
                 type: string
+        '500':
+          description: "The operation could not be completed."
   /pubsub:
     post:
       tags:
@@ -525,7 +518,7 @@ paths:
       produces:
       - "application/json"
       responses:
-        200:
+        201:
           description: "Successful operation"
           schema:
             type: object
@@ -538,15 +531,6 @@ paths:
                 type: string
         '500':
           description: "the operation could not be completed"
-          schema:
-            type: object
-            properties:
-              error: 
-               type: boolean
-              code:
-                type: integer
-              message:
-                type: string
   /pubsub/{topic}:
     post:
       tags:
@@ -573,7 +557,7 @@ paths:
             content:
               type: string
       responses:
-        '200':
+        '201':
           description: "Successful operation"
           schema:
             type: "object"
@@ -586,15 +570,6 @@ paths:
                 type: string
         '500':
           description: "The operation could not be completed"
-          schema:
-            type: object
-            properties:
-              error: 
-               type: boolean
-              code:
-                type: integer
-              message:
-                type: string
   /key:
     post:
       tags:
@@ -646,15 +621,6 @@ paths:
                 type: string
         '500':
           description: "The operation could not be completed."
-          schema:
-            type: object
-            properties:
-              error: 
-               type: boolean
-              code:
-                type: integer
-              message:
-                type: string
     get:
       tags:
       - "key"
@@ -684,15 +650,6 @@ paths:
                       type: string
         '500':
           description: "The operation could not be completed."
-          schema:
-            type: object
-            properties:
-              error: 
-               type: boolean
-              code:
-                type: integer
-              message:
-                type: string
   /key/{name}:
     delete:
       tags:
@@ -739,16 +696,7 @@ paths:
               message: 
                type: string
         '500':
-          description: "Server error"
-          schema:
-            type: object
-            properties:
-              error:
-                type: boolean
-              code:
-                type: integer
-              message: 
-               type: string
+          description: "Internal error"
   /dht/peer/{id}:
     get:
       tags:
@@ -795,12 +743,7 @@ paths:
               message:
                 type: string
         '500':
-          description: "Invalid cid"
-          schema:
-            type: object
-            properties:
-              error: 
-               type: string
+          description: "Internal error"
   /dht/provider/{cid}:
     get:
       tags:
@@ -831,16 +774,7 @@ paths:
                 items:
                   type: string
         '500':
-          description: "Successful operation"
-          schema:
-            type: "object"
-            properties:
-              error:
-                type: boolean
-              code:
-                type: integer
-              message:
-                type: string
+          description: "Internal error"
   /id:
     get:
       tags:
@@ -880,13 +814,4 @@ paths:
                     items:
                       type: string
         '500':
-          description: "Server error"
-          schema:
-            type: object
-            properties:
-              error: 
-                type: boolean
-              code:
-                type: integer
-              message:
-                type: string
+          description: "Internal error"

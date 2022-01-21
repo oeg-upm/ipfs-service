@@ -1,8 +1,7 @@
+import fs, { read } from 'fs'
+import { exec, fork } from 'child_process'
+import readline from 'readline'
 import fetch from 'node-fetch'
-import fs from 'fs';
-import { exec }  from "child_process"
-
-const num = process.argv[2];
 
 let optionsPost = {
     method: "POST",
@@ -13,12 +12,34 @@ let optionsPost = {
             content: 'Subimos este contenido'
     })
 }
-var cid;
-//Subimos y publicamos el fichero
+var num = "00";
+//const archivo='scripts/int_analog01.csv'
+const archivo = process.argv[2];
+if(archivo == "int_analog01.csv") num = "01";
+if(archivo == "int_analog02.csv") num = "02";
+if(archivo == "pro_power.csv") num = "03";
+console.log(archivo)
+
+//else num = archivo.replace("int_analog",'').replace('.csv','')
+
+const readable = fs.createReadStream('nuevo')
+//const escritor = fs.createWriteStream('final' + num + '.csv')
+var rl = readline.createInterface({
+    input: readable,
+    crlfDelay: Infinity
+});
+
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+    }
+}
+console.log("realizamos el post")
 try {
     //Fichero que vamos a publicar
-    let data = fs.readFileSync('final' + num + '.csv')
-    let contenido = data.toString('UTF8');
+    var contenido = fs.readFileSync('nuevo',{encoding:'utf8', flag:'r'});
     //console.log(contenido);
     fetch("http://localhost:4040/file", optionsPost = {
         method: "POST",
@@ -46,11 +67,10 @@ try {
             })
             .then(response => response.text())
             .then(data => {
-            //Procesar los datos
-            console.log("Fichero actualizado")
+                //Procesar los datos
+                //console.log("Fichero actualizado")
             });
         });
 } catch (err) {
     console.error(err);
 };
-
