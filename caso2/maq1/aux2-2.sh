@@ -29,7 +29,7 @@ do
 	then
 		echo "$line" >> nuevo
 		#Llamamos al script que va a subir el fichero
-		node caso2.mjs $1
+		node lecturaLineas2.mjs $1
 	sleep 5
 	fi
 	CONT=$((CONT + 1))
