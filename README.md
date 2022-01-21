@@ -63,6 +63,16 @@ ipfs --version
 > ipfs version 0.11.0
 ```
 
+#### Despliegue de la API Rest (app.mjs)
+
+_Se debe ejecutar en cada máquina de cada caso el script app.mjs_
+
+```
+ipfs daemon &
+node app.mjs
+```
+
+
 
 ## Construido con 🛠️
 
