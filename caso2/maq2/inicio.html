@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width-device-width, initial-scale=2.0" />
+		<title>How to update a chart dynamically based on CSV files in Chart JS</title>
+		<style type="text/css">
+			.chartBox {
+				width: 700px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="chartBox">
+			<canvas id="myChart"></canvas>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
+
+		<input type="file" id="uploadfile" accept=".csv">
+		<br>
+		<button id="uploadconfirm">Upload File CO2 and Humidity</button>
+		<br>
+		<button onclick="updateChart('CO2_int_South')">Show co2</button>
+		<button onclick="updateChart('H_int_South')">Show Humidity</button>
+		<hr>
+		<input type="file" id="uploadfile2" accept=".csv">
+		<br>
+		<button id="uploadconfirm2">Upload File Power</button>
+		<br>
+		<button onclick="updateChart('L_1')">Show Power</button>
+		<script>
+			//setup
+			const data = {
+				labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+					datasets: [{
+						label: 'Line Chart',
+						data: [],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1,
+						fill: false,
+						tension: 0.1
+					}]
+			}
+
+			//config
+			const config = {
+				type: 'line',
+				data,
+				options: {
+					scales: {
+						y: {
+							beginAtZero: false
+						}
+					}
+				}
+			};
+			
+			//render init
+			const myChart = new Chart(
+				document.getElementById('myChart'),
+				config
+			);
+
+			//Papa Parse JS
+			//"unix_ref";"date";"time";"H_int_South";"CO2_int_South"
+			const co2Data = [];
+			const dateData = [];
+			const timeData = [];
+			const hData = [];
+			const labels = [];
+			const uploadconfirm = document.getElementById('uploadconfirm').addEventListener('click',() => {
+				//document.getElementById('uploadfile').files[0].reload();
+				
+				Papa.parse(document.getElementById('uploadfile').files[0], {
+					download: true,
+					header: true,
+					skipEmptyLines: true,
+					complete: function(results) {
+						//console.log(results);
+						//console.log(results.data[0].CO2_int_South)
+						//Campos del csv:
+							//"unix_ref";"date";"time";"H_int_South";"CO2_int_South"
+						co2Data.splice(0,co2Data.length);
+						hData.splice(0,hData.length);
+						timeData.splice(0,timeData.length);
+						dateData.splice(0,dateData.length);
+						labels.splice(0,labels.length);
+						for (var i = 0; i < results.data.length; i++) {
+							co2Data.push(results.data[i].CO2_int_South)
+							hData.push(results.data[i].H_int_South)
+							dateData.push(results.data[i].date)
+							timeData.push(results.data[i].time)
+							labels.push(results.data[i].time)
+						}
+						console.log("Datos actualizados")
+					}
+				});
+			});
+			const powerData2 = []
+			const dateData2 = [];
+			const timeData2 = [];
+			const labels2 = [];
+			const uploadconfirm2 = document.getElementById('uploadconfirm2').addEventListener('click',() => {		
+				Papa.parse(document.getElementById('uploadfile2').files[0], {
+					download: true,
+					header: true,
+					skipEmptyLines: true,
+					complete: function(results) {
+						//Campos del csv:
+							//"unix_ref";"date";"time";"L_1"
+						powerData2.splice(0,powerData2.length);	
+						timeData2.splice(0,timeData2.length);
+						dateData2.splice(0,dateData2.length);
+						labels2.splice(0,labels2.length);
+						for (var i = 0; i < results.data.length; i++) {
+							powerData2.push(results.data[i].L_1)
+							dateData2.push(results.data[i].date)
+							timeData2.push(results.data[i].time)
+							labels2.push(results.data[i].time)
+						}
+						console.log(powerData2)
+						console.log("Datos actualizados")
+					}
+				});
+			});
+			//Funciones para actualizar el gráfico
+			function updateChart(label) {
+				myChart.data.datasets[0].label = label
+				myChart.data.labels = labels;
+				if(label == 'CO2_int_South') {
+					myChart.data.datasets[0].data = co2Data
+				}
+				if(label == 'H_int_South') {
+					myChart.data.datasets[0].data = hData
+				}
+				if(label == 'L_1') {
+					console.log("Llegamos aquí")
+					myChart.data.datasets[0].data = powerData2
+					myChart.data.labels = labels2;
+				}
+				myChart.update();
+			}
+			</script>
+	</body>
+</html>
